@@ -93,6 +93,9 @@ export class VariableScanner {
   
   // Instance variable tracking - maps "file:variableName" to object type
   private instanceVariables: Map<string, InstanceVariable> = new Map();
+  
+  // Script-local variables - maps script file path to its local variables
+  private scriptVariables: Map<string, Map<string, ScannedVariable>> = new Map();
 
   constructor() {
     this.setupFileWatcher();
@@ -123,6 +126,22 @@ export class VariableScanner {
     const objectMatch = normalizedPath.match(/objects\/([^/]+)\//i);
     if (objectMatch) {
       return objectMatch[1];
+    }
+    
+    return undefined;
+  }
+
+  /**
+   * Get the script context for a given file path
+   * Returns the script name if the file is inside scripts/<script_name>/
+   */
+  public getScriptContextFromPath(filePath: string): string | undefined {
+    const normalizedPath = filePath.replace(/\\/g, '/');
+    
+    // Match pattern: scripts/<script_name>/*.gml
+    const scriptMatch = normalizedPath.match(/scripts\/([^/]+)\//i);
+    if (scriptMatch) {
+      return scriptMatch[1];
     }
     
     return undefined;
@@ -511,6 +530,7 @@ export class VariableScanner {
       const content = fs.readFileSync(filePath, 'utf8');
       const lines = content.split('\n');
       const objectContext = this.getObjectContextFromPath(filePath);
+      const scriptContext = this.getScriptContextFromPath(filePath);
       
       // Initialize or get object context
       let context: ObjectContext | undefined;
@@ -523,6 +543,12 @@ export class VariableScanner {
           });
         }
         context = this.objectContexts.get(objectContext);
+      }
+
+      // Initialize script variables map for this file
+      if (scriptContext) {
+        // Clear existing variables for this script file
+        this.scriptVariables.set(filePath, new Map());
       }
 
       // Clear previous instance variables for this file
@@ -569,6 +595,13 @@ export class VariableScanner {
             this.globalVariables.set(variable.name, variable);
           } else if (context) {
             context.variables.set(variable.name, variable);
+          } else if (scriptContext) {
+            // Store script-local variables
+            const scriptVars = this.scriptVariables.get(filePath);
+            if (scriptVars) {
+              variable.objectContext = `script: ${scriptContext}`;
+              scriptVars.set(variable.name, variable);
+            }
           }
         }
         
@@ -859,6 +892,9 @@ export class VariableScanner {
         this.globalVariables.delete(name);
       }
     }
+    
+    // Remove script-local variables
+    this.scriptVariables.delete(filePath);
   }
 
   /**
@@ -883,6 +919,14 @@ export class VariableScanner {
       }
     }
     
+    // Add script-local variables if this is a script file
+    const scriptVars = this.scriptVariables.get(filePath);
+    if (scriptVars) {
+      for (const variable of scriptVars.values()) {
+        variables.push(variable);
+      }
+    }
+    
     return variables;
   }
 
@@ -890,7 +934,13 @@ export class VariableScanner {
    * Get a specific variable by name within a file's context
    */
   public getVariable(name: string, filePath: string): ScannedVariable | undefined {
-    // Check global variables first
+    // Check script-local variables first (higher priority in script context)
+    const scriptVars = this.scriptVariables.get(filePath);
+    if (scriptVars && scriptVars.has(name)) {
+      return scriptVars.get(name);
+    }
+    
+    // Check global variables
     if (this.globalVariables.has(name)) {
       return this.globalVariables.get(name);
     }
