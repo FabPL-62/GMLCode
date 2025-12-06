@@ -2,7 +2,7 @@
   "name": "gamemaker-gml-support",
   "displayName": "GameMaker GML - Syntax & IntelliSense",
   "description": "GameMaker Language (GML) support with syntax highlighting, IntelliSense, hover documentation, and object context awareness",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "FabPL-62",
   "engines": {
     "vscode": "^1.74.0"
