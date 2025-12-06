@@ -1,0 +1,260 @@
+{
+  "If Statement": {
+    "prefix": "if",
+    "body": [
+      "if (${1:condition}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "If statement"
+  },
+  "If-Else Statement": {
+    "prefix": "ifelse",
+    "body": [
+      "if (${1:condition}) {",
+      "\t$2",
+      "} else {",
+      "\t$0",
+      "}"
+    ],
+    "description": "If-else statement"
+  },
+  "For Loop": {
+    "prefix": "for",
+    "body": [
+      "for (var ${1:i} = 0; ${1:i} < ${2:count}; ${1:i}++) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "For loop"
+  },
+  "While Loop": {
+    "prefix": "while",
+    "body": [
+      "while (${1:condition}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "While loop"
+  },
+  "Do-Until Loop": {
+    "prefix": "dountil",
+    "body": [
+      "do {",
+      "\t$0",
+      "} until (${1:condition});"
+    ],
+    "description": "Do-until loop"
+  },
+  "Repeat Loop": {
+    "prefix": "repeat",
+    "body": [
+      "repeat (${1:times}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Repeat loop"
+  },
+  "Switch Statement": {
+    "prefix": "switch",
+    "body": [
+      "switch (${1:expression}) {",
+      "\tcase ${2:value}:",
+      "\t\t$0",
+      "\t\tbreak;",
+      "\tdefault:",
+      "\t\tbreak;",
+      "}"
+    ],
+    "description": "Switch statement"
+  },
+  "With Statement": {
+    "prefix": "with",
+    "body": [
+      "with (${1:object}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "With statement"
+  },
+  "Function Definition": {
+    "prefix": "function",
+    "body": [
+      "function ${1:name}(${2:params}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Function definition"
+  },
+  "Constructor": {
+    "prefix": "constructor",
+    "body": [
+      "function ${1:Name}(${2:params}) constructor {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Constructor function"
+  },
+  "Debug Message": {
+    "prefix": ["debug", "print", "log"],
+    "body": "show_debug_message(${1:message});",
+    "description": "Show debug message"
+  },
+  "Create Instance (Layer)": {
+    "prefix": "instance_create",
+    "body": "instance_create_layer(${1:x}, ${2:y}, \"${3:layer}\", ${4:object});",
+    "description": "Create instance on a layer"
+  },
+  "Create Instance (Depth)": {
+    "prefix": "instance_create_depth",
+    "body": "instance_create_depth(${1:x}, ${2:y}, ${3:depth}, ${4:object});",
+    "description": "Create instance at depth"
+  },
+  "Draw Sprite": {
+    "prefix": "draw_sprite",
+    "body": "draw_sprite(${1:sprite}, ${2:subimg}, ${3:x}, ${4:y});",
+    "description": "Draw a sprite"
+  },
+  "Draw Sprite Ext": {
+    "prefix": "draw_sprite_ext",
+    "body": "draw_sprite_ext(${1:sprite}, ${2:subimg}, ${3:x}, ${4:y}, ${5:xscale}, ${6:yscale}, ${7:rot}, ${8:col}, ${9:alpha});",
+    "description": "Draw sprite with extended options"
+  },
+  "Draw Text": {
+    "prefix": "draw_text",
+    "body": "draw_text(${1:x}, ${2:y}, ${3:string});",
+    "description": "Draw text"
+  },
+  "Draw Rectangle": {
+    "prefix": "draw_rectangle",
+    "body": "draw_rectangle(${1:x1}, ${2:y1}, ${3:x2}, ${4:y2}, ${5:outline});",
+    "description": "Draw a rectangle"
+  },
+  "Variable Declaration": {
+    "prefix": "var",
+    "body": "var ${1:name} = ${2:value};",
+    "description": "Declare a local variable"
+  },
+  "Enum": {
+    "prefix": "enum",
+    "body": [
+      "enum ${1:Name} {",
+      "\t${2:VALUE1},",
+      "\t${3:VALUE2}",
+      "}"
+    ],
+    "description": "Enum declaration"
+  },
+  "Macro": {
+    "prefix": "macro",
+    "body": "#macro ${1:NAME} ${2:value}",
+    "description": "Macro definition"
+  },
+  "Region": {
+    "prefix": "region",
+    "body": [
+      "#region ${1:Region Name}",
+      "$0",
+      "#endregion"
+    ],
+    "description": "Code region"
+  },
+  "Try-Catch": {
+    "prefix": "try",
+    "body": [
+      "try {",
+      "\t$0",
+      "} catch (${1:_exception}) {",
+      "\tshow_debug_message(${1:_exception}.message);",
+      "}"
+    ],
+    "description": "Try-catch block"
+  },
+  "Keyboard Check": {
+    "prefix": "keyboard_check",
+    "body": "keyboard_check(${1:vk_key})",
+    "description": "Check if key is held"
+  },
+  "Keyboard Check Pressed": {
+    "prefix": "keyboard_check_pressed",
+    "body": "keyboard_check_pressed(${1:vk_key})",
+    "description": "Check if key was pressed"
+  },
+  "Place Meeting": {
+    "prefix": "place_meeting",
+    "body": "place_meeting(${1:x}, ${2:y}, ${3:obj})",
+    "description": "Check for collision at position"
+  },
+  "DS List Create": {
+    "prefix": "ds_list_create",
+    "body": [
+      "var ${1:list} = ds_list_create();",
+      "$0"
+    ],
+    "description": "Create a DS list"
+  },
+  "DS Map Create": {
+    "prefix": "ds_map_create",
+    "body": [
+      "var ${1:map} = ds_map_create();",
+      "$0"
+    ],
+    "description": "Create a DS map"
+  },
+  "Audio Play Sound": {
+    "prefix": "audio_play_sound",
+    "body": "audio_play_sound(${1:sound}, ${2:priority}, ${3:loops});",
+    "description": "Play a sound"
+  },
+  "Array Create": {
+    "prefix": "array_create",
+    "body": "var ${1:arr} = array_create(${2:size}, ${3:value});",
+    "description": "Create an array"
+  },
+  "JSDoc Function": {
+    "prefix": "jsdoc",
+    "body": [
+      "/// @function ${1:function_name}(${2:params})",
+      "/// @description ${3:Description of the function}",
+      "/// @param {${4:type}} ${5:param_name} - ${6:Description}",
+      "/// @return {${7:type}} ${8:Description of return value}"
+    ],
+    "description": "JSDoc function documentation"
+  },
+  "Surface Create and Draw": {
+    "prefix": "surface",
+    "body": [
+      "if (!surface_exists(${1:surf})) {",
+      "\t${1:surf} = surface_create(${2:width}, ${3:height});",
+      "}",
+      "surface_set_target(${1:surf});",
+      "draw_clear_alpha(c_black, 0);",
+      "$0",
+      "surface_reset_target();"
+    ],
+    "description": "Create and set surface target"
+  },
+  "Lerp Movement": {
+    "prefix": "lerp_move",
+    "body": [
+      "${1:x} = lerp(${1:x}, ${2:target_x}, ${3:0.1});",
+      "${4:y} = lerp(${4:y}, ${5:target_y}, ${3:0.1});"
+    ],
+    "description": "Smooth lerp movement"
+  },
+  "State Machine Switch": {
+    "prefix": "statemachine",
+    "body": [
+      "switch (${1:state}) {",
+      "\tcase ${2:STATE_IDLE}:",
+      "\t\t$0",
+      "\t\tbreak;",
+      "\tcase ${3:STATE_MOVING}:",
+      "\t\t",
+      "\t\tbreak;",
+      "}"
+    ],
+    "description": "State machine switch statement"
+  }
+}
+

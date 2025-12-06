@@ -1,0 +1,111 @@
+{
+  "name": "gamemaker-gml-support",
+  "displayName": "GameMaker GML - Syntax & IntelliSense",
+  "description": "GameMaker Language (GML) support with syntax highlighting, IntelliSense, hover documentation, and object context awareness",
+  "version": "1.0.0",
+  "publisher": "FabPL-62",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Linters"
+  ],
+  "keywords": [
+    "gamemaker",
+    "gml",
+    "game maker",
+    "game development",
+    "yoyo games"
+  ],
+  "icon": "images/icon.png",
+  "activationEvents": [
+    "onLanguage:gml",
+    "workspaceContains:**/*.gml"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "gml",
+        "aliases": [
+          "GameMaker Language",
+          "GML",
+          "gml"
+        ],
+        "extensions": [
+          ".gml"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "gml",
+        "scopeName": "source.gml",
+        "path": "./syntaxes/gml.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "gml",
+        "path": "./snippets/gml.snippets.json"
+      }
+    ],
+    "configuration": {
+      "title": "GML Language Support",
+      "properties": {
+        "gml.enableObjectContextVariables": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable scanning variables within object context (objects/<objectName>/*.gml)"
+        },
+        "gml.showVariableComments": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show variable comments in hover tooltips"
+        },
+        "gml.enableFunctionDocumentation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show function documentation on hover"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "gml.rescanWorkspace",
+        "title": "GML: Rescan Workspace",
+        "category": "GML"
+      },
+      {
+        "command": "gml.showOutput",
+        "title": "GML: Show Output",
+        "category": "GML"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0",
+    "@vscode/vsce": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gmlcode/gml-language-support"
+  },
+  "license": "MIT"
+}
+
